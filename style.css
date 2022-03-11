@@ -7,6 +7,7 @@ body {
 .container {
     height: 100%;
     width: 100%;
+    padding-bottom: 20px;
 }
 
 .containerTitle {
@@ -40,7 +41,7 @@ body {
 }
 
 .container .profilePanel .instagramHeader {
-    padding: 10px 10px 5px 15px;
+    padding: 5px 10px 5px 15px;
     background-color: #ffffff;
 }
 
