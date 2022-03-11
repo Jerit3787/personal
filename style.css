@@ -1,6 +1,6 @@
 body {
     font-family: 'Poppins', 'OpenSans';
-    background: #181818;
+    background: #ffffff;
     margin: 10px;
 }
 
@@ -9,27 +9,66 @@ body {
     width: 100%;
 }
 
+.containerTitle {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+}
+
+.containerTitle .title {
+    margin: 0;
+}
+
+.container .profilePanel #twitter {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
 .container .profilePanel {
     height: auto;
     width: 100%;
-    background-color: #FFFFFF;
-    border-radius: 25px;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 10px;
+    overflow: hidden;
+    -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.41);
+    -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.41);
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.25);
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.container .profilePanel .instagramHeader {
+    padding: 10px 10px 5px 15px;
+    background-color: #ffffff;
+}
+
+.container .profilePanel .profileWidget {
+    margin: 10px 0px 10px 20px;
     display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 0px;
+    flex-flow: row nowrap;
+}
+
+.container .profilePanel .profileWidget .profileInfomation {
+    padding-left: 10px;
+    width: auto;
+}
+
+.container .profilePanel .profileWidget #profileLoc {
+    color: #000000
+}
+
+.container .profilePanel .profileWidget #profileStatus {
+    margin: 2px 0px 0px 0px;
 }
 
 .container .profilePanel .profileImg {
-    vertical-align: middle;
     background-color: rgba(0, 0, 0, .1);
     border-radius: 50%;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    margin: 0 auto;
-    vertical-align: middle;
     display: inline-block;
 }
 
@@ -39,52 +78,34 @@ body {
     margin: 5px 0px 0px 0px;
 }
 
-.container .profilePanel #profileJob {
-    background-color: rgba( 0, 0, 0, 0.05);
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
-    width: auto;
-    height: auto;
-    border-radius: 50px;
-    padding: 0px 5px;
-    margin: 10px 0px 0px 0px;
-}
-
 .container .profilePanel #profileLoc {
-    margin: 10px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    font-size: 12px;
 }
 
 .container .profilePanel #profileStatus {
-    text-align: center;
-    width: 80%;
-    margin: 10px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
 }
 
 .container .profilePanel .socialButtons {
-    width: auto;
-    height: auto;
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    margin-top: 10px;
 }
 
-.container .profilePanel .socialButtons .clickButton {
-    background-color: rgba( 0, 0, 0, 0.05);
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
-    width: auto;
-    height: auto;
-    border-radius: 50px;
-    padding: 5px 10px;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0px 0px 10px;
+.container .profilePanel .socialButtons #numberTitle {
+    margin-left: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0px 0px 0px 4px;
 }
 
-.container .profilePanel .socialButtons .clickButton #buttonText {
-    padding: 0px 0px 0px 5px;
-    margin: 0px;
+.container .profilePanel .socialButtons #numberSubtitle {
+    margin-left: 5px;
+    font-size: 12px;
+    margin: 0px 0px 0px 4px;
 }
 
 .container .linkButton {
@@ -94,10 +115,13 @@ body {
     justify-content: center;
     align-items: center;
     align-content: center;
-    border-radius: 25px;
+    border-radius: 10px;
     padding: 20px 10px;
     margin-top: 10px;
     cursor: pointer;
+    -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.41);
+    -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.41);
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.25);
 }
 
 .container .linkButton .buttonText {
