@@ -125,6 +125,10 @@ body {
     box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.25);
 }
 
+.container .linkButton span {
+    font-size: 30px;
+}
+
 .container .linkButton .buttonText {
     margin: 0px 0px 0px 10px;
 }
