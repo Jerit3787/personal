@@ -26,6 +26,13 @@ async function fetchSocialData() {
     }
 }
 
+// Function to handle text with line breaks
+function formatBiography(text) {
+    if (!text) return '';
+    // Replace newline characters with <br> tags for proper HTML display
+    return text.replace(/\n/g, '<br>');
+}
+
 // Function to update the Instagram panel with profile data
 function updateInstagramPanel(data) {
     if (!data || !data.instagram) return;
@@ -34,8 +41,8 @@ function updateInstagramPanel(data) {
 
     // Update Instagram profile name
     const nameElement = document.querySelector('.profilePanel:nth-child(2) .profileName');
-    if (nameElement && instagram.username) {
-        nameElement.textContent = instagram.username;
+    if (nameElement && instagram.name) {
+        nameElement.textContent = instagram.name;
     }
 
     // Update Instagram profile username
@@ -47,7 +54,7 @@ function updateInstagramPanel(data) {
     // Update Instagram bio (if available)
     const bioElement = document.querySelector('.profilePanel:nth-child(2) #profileStatus');
     if (bioElement && instagram.biography) {
-        bioElement.textContent = instagram.biography;
+        bioElement.innerHTML = formatBiography(instagram.biography);
     }
 
     // Update Instagram stats
@@ -99,7 +106,7 @@ function updateTwitterPanel(data) {
     // Update Twitter bio
     const bioElement = document.querySelector('.profilePanel:nth-child(3) #profileStatus');
     if (bioElement && twitter.description) {
-        bioElement.textContent = twitter.description;
+        bioElement.innerHTML = formatBiography(twitter.description);
     }
 
     // Update Twitter stats
