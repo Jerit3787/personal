@@ -1,8 +1,13 @@
 {
-  "instagram": {
-    "followers": 541
-  },
+  "last_updated": "2025-05-06T17:18:32.029695",
   "twitter": {
     "followers": 0
+  },
+  "instagram": {
+    "username": "dnshzel",
+    "media_count": 0,
+    "account_type": "MEDIA_CREATOR",
+    "followers": 541,
+    "following": 621
   }
 }
