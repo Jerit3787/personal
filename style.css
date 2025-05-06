@@ -1,134 +1,397 @@
+:root {
+    --primary-color: #4a6cf7;
+    --text-color: #333333;
+    --background-color: #f8f9fa;
+    --card-bg-color: #ffffff;
+    --card-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    --hover-color: #e9f0ff;
+    --border-radius: 12px;
+    --header-bg: #ffffff;
+    --twitter-color: #1DA1F2;
+    --instagram-color: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    --footer-color: #666;
+}
+
+[data-theme="dark"] {
+    --primary-color: #6d8cff;
+    --text-color: #f8f9fa;
+    --background-color: #121212;
+    --card-bg-color: #1e1e1e;
+    --card-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    --hover-color: #2c2c2c;
+    --header-bg: #1e1e1e;
+    --footer-color: #aaa;
+}
+
 body {
-    font-family: 'Poppins', 'OpenSans';
-    background: #ffffff;
-    margin: 10px;
+    font-family: 'Poppins', 'OpenSans', sans-serif;
+    background: var(--background-color);
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
-    height: 100%;
+    max-width: 600px;
     width: 100%;
-    padding-bottom: 20px;
+    margin: 20px auto;
+    padding: 0 15px 20px;
+    box-sizing: border-box;
 }
 
 .containerTitle {
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
+    margin-bottom: 20px;
 }
 
 .containerTitle .title {
     margin: 0;
+    font-weight: 600;
+    color: var(--primary-color);
 }
 
-.container .profilePanel #twitter {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    justify-content: center;
-}
-
-.container .profilePanel {
+.profilePanel {
     height: auto;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.02);
-    border-radius: 10px;
+    background-color: var(--card-bg-color);
+    border-radius: var(--border-radius);
     overflow: hidden;
-    -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.41);
-    -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.41);
-    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--card-shadow);
     margin-top: 20px;
     cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.container .profilePanel .instagramHeader {
-    padding: 5px 10px 5px 15px;
-    background-color: #ffffff;
+.profilePanel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
 }
 
-.container .profilePanel .profileWidget {
-    margin: 10px 0px 10px 20px;
+.profilePanel .instagramHeader {
+    padding: 12px 15px;
+    background-color: var(--header-bg);
+    display: flex;
+    align-items: center;
+}
+
+.profilePanel .instagramHeader i {
+    font-size: 28px;
+    background: var(--instagram-color);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.twitter-header i {
+    color: var(--twitter-color) !important;
+    background: none !important;
+    -webkit-text-fill-color: var(--twitter-color) !important;
+}
+
+.profilePanel .profileWidget {
+    margin: 15px 0px 15px 20px;
     display: flex;
     flex-flow: row nowrap;
 }
 
-.container .profilePanel .profileWidget .profileInfomation {
-    padding-left: 10px;
+.profilePanel .profileWidget .profileInfomation {
+    padding-left: 15px;
     width: auto;
+    padding-right: 15px;
 }
 
-.container .profilePanel .profileWidget #profileLoc {
-    color: #000000
+.profilePanel .profileWidget #profileLoc {
+    color: var(--text-color);
+    opacity: 0.8;
 }
 
-.container .profilePanel .profileWidget #profileStatus {
-    margin: 2px 0px 0px 0px;
+.profilePanel .profileWidget #profileStatus {
+    margin: 5px 0px 0px 0px;
+    line-height: 1.4;
 }
 
-.container .profilePanel .profileImg {
+.profilePanel .profileImg {
     background-color: rgba(0, 0, 0, .1);
     border-radius: 50%;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
     display: inline-block;
+    border: 3px solid var(--primary-color);
 }
 
-.container .profilePanel .profileName {
+.profilePanel .profileName {
     height: auto;
     width: auto;
     margin: 5px 0px 0px 0px;
 }
 
-.container .profilePanel #profileLoc {
+.profilePanel #profileLoc {
     margin: 0px 0px 0px 0px;
-    font-size: 12px;
+    font-size: 14px;
 }
 
-.container .profilePanel #profileStatus {
+.profilePanel #profileStatus {
     margin: 0px 0px 0px 0px;
+    opacity: 0.8;
 }
 
-.container .profilePanel .socialButtons {
+.profilePanel .socialButtons {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 12px;
+    gap: 15px;
 }
 
-.container .profilePanel .socialButtons #numberTitle {
-    margin-left: 5px;
-    font-size: 12px;
+.profilePanel .socialButtons #numberTitle {
+    font-size: 14px;
     font-weight: bold;
-    margin: 0px 0px 0px 4px;
+    margin: 0;
+    transition: all 0.5s ease;
 }
 
-.container .profilePanel .socialButtons #numberSubtitle {
-    margin-left: 5px;
+.profilePanel .socialButtons #numberTitle.updating {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.profilePanel .socialButtons #numberSubtitle {
     font-size: 12px;
-    margin: 0px 0px 0px 4px;
+    margin: 0;
+    opacity: 0.7;
 }
 
-.container .linkButton {
-    background-color: #FFFFFF;
+.linkButton {
+    background-color: var(--card-bg-color);
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
     align-content: center;
-    border-radius: 10px;
-    padding: 20px 10px;
-    margin-top: 10px;
+    border-radius: var(--border-radius);
+    padding: 16px 10px;
+    margin-top: 15px;
     cursor: pointer;
-    -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.41);
-    -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.41);
-    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.container .linkButton span {
-    font-size: 30px;
+.linkButton:hover {
+    transform: translateY(-3px);
+    background-color: var(--hover-color);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.container .linkButton .buttonText {
-    margin: 0px 0px 0px 10px;
+.linkButton i {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+.linkButton .buttonText {
+    margin: 0px 0px 0px 12px;
+    font-weight: 500;
+}
+
+/* Update Indicator and Refresh Button */
+.update-indicator {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    margin-top: 10px;
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+.update-text {
+    margin-right: 8px;
+}
+
+.refresh-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.refresh-button:hover {
+    background-color: rgba(74, 108, 247, 0.1);
+}
+
+.refresh-button i {
+    font-size: 16px;
+}
+
+.refresh-button.rotating i {
+    animation: rotate 1s linear;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Loading indicator for social panels */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    border-radius: var(--border-radius);
+}
+
+.loading-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.loading-spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(74, 108, 247, 0.2);
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Dark mode toggle */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 24px;
+    position: relative;
+    width: 48px;
+}
+
+.theme-switch input {
+    display: none;
+}
+
+.slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+}
+
+.slider:before {
+    background-color: white;
+    bottom: 4px;
+    content: "";
+    height: 16px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 16px;
+}
+
+input:checked+.slider {
+    background-color: var(--primary-color);
+}
+
+input:checked+.slider:before {
+    transform: translateX(24px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.theme-mode {
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 15px;
+    font-size: 14px;
+    color: var(--footer-color);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .container {
+        margin: 10px auto;
+    }
+
+    .theme-switch-wrapper {
+        top: 10px;
+        right: 10px;
+    }
+
+    .profilePanel .profileWidget {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin: 15px 10px;
+    }
+
+    .profilePanel .profileWidget .profileInfomation {
+        padding-left: 0;
+        padding-top: 15px;
+    }
+
+    .profilePanel .socialButtons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .containerTitle .title {
+        font-size: 20px;
+    }
+
+    .profilePanel .profileImg {
+        height: 80px;
+        width: 80px;
+    }
 }
