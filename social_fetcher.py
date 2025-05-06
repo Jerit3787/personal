@@ -58,7 +58,7 @@ def get_instagram_followers():
     try:
         print("Fetching Instagram follower count via API...")
         # Instagram Graph API endpoint for user profile
-        url = f"https://graph.instagram.com/v12.0/{INSTAGRAM_USER_ID}?fields=followers_count&access_token={INSTAGRAM_ACCESS_TOKEN}"
+        url = f"https://graph.instagram.com/me?fields=followers_count&access_token={INSTAGRAM_ACCESS_TOKEN}"
         
         response = requests.get(url, timeout=10)
         response.raise_for_status()
