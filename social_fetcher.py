@@ -1,14 +1,17 @@
 #!/usr/bin/env python
 """
-Social Media Follower Counter
-Fetches follower counts from Twitter and Instagram APIs and saves to a JSON file.
+Enhanced Social Media Data Fetcher
+Fetches comprehensive profile data from Twitter and Instagram APIs and saves to a JSON file.
 Designed to run as a GitHub Action workflow.
 """
 
 import os
 import json
 import requests
+import base64
 from datetime import datetime
+from urllib.parse import urlparse
+from pathlib import Path
 
 # Configuration
 OUTPUT_PATH = "social_data.json"
@@ -16,65 +19,130 @@ TWITTER_USER_ID = os.environ.get("TWITTER_USER_ID", "")
 TWITTER_BEARER_TOKEN = os.environ.get("TWITTER_BEARER_TOKEN", "")
 INSTAGRAM_ACCESS_TOKEN = os.environ.get("INSTAGRAM_ACCESS_TOKEN", "")
 INSTAGRAM_USER_ID = os.environ.get("INSTAGRAM_USER_ID", "")
+SAVE_PROFILE_IMAGES = True  # Whether to download profile images
 
 
-def get_twitter_followers():
-    """Fetch follower count from Twitter API"""
+def get_twitter_profile():
+    """Fetch comprehensive Twitter profile data"""
     if not TWITTER_BEARER_TOKEN or not TWITTER_USER_ID:
         print("Error: Twitter API credentials not provided")
-        return 0
+        return None
 
-    url = f"https://api.twitter.com/2/users/{TWITTER_USER_ID}?user.fields=public_metrics"
+    url = f"https://api.twitter.com/2/users/{TWITTER_USER_ID}?user.fields=description,name,username,profile_image_url,public_metrics"
     headers = {
         "Authorization": f"Bearer {TWITTER_BEARER_TOKEN}",
         "Content-Type": "application/json"
     }
 
     try:
-        print("Fetching Twitter follower count via API...")
+        print("Fetching Twitter profile data via API...")
         response = requests.get(url, headers=headers, timeout=10)
-        response.raise_for_status()  # Raise exception for HTTP errors
+        response.raise_for_status()
         
         data = response.json()
-        if data and "data" in data and "public_metrics" in data["data"]:
-            follower_count = data["data"]["public_metrics"]["followers_count"]
-            print(f"Twitter followers: {follower_count}")
-            return follower_count
+        if data and "data" in data:
+            user_data = data["data"]
+            profile_data = {
+                "username": user_data.get("username", ""),
+                "name": user_data.get("name", ""),
+                "description": user_data.get("description", ""),
+                "followers": user_data.get("public_metrics", {}).get("followers_count", 0),
+                "following": user_data.get("public_metrics", {}).get("following_count", 0),
+                "tweets": user_data.get("public_metrics", {}).get("tweet_count", 0),
+                "profile_image_url": user_data.get("profile_image_url", "")
+            }
+            
+            # Save profile image if available and configured to do so
+            if SAVE_PROFILE_IMAGES and profile_data["profile_image_url"]:
+                profile_data["profile_image_path"] = download_image(
+                    profile_data["profile_image_url"], 
+                    "twitter_profile.jpg"
+                )
+            
+            print(f"Twitter data fetched: @{profile_data['username']} - {profile_data['followers']} followers")
+            return profile_data
         else:
             print("Error: Unexpected Twitter API response format")
             print(f"Response: {data}")
-            return 0
+            return None
     except Exception as e:
         print(f"Error fetching Twitter data: {e}")
-        return 0
+        return None
 
 
-def get_instagram_followers():
-    """Fetch follower count from Instagram Graph API"""
-    if not INSTAGRAM_ACCESS_TOKEN or not INSTAGRAM_USER_ID:
+def get_instagram_profile():
+    """Fetch comprehensive Instagram profile data"""
+    if not INSTAGRAM_ACCESS_TOKEN:
         print("Error: Instagram API credentials not provided")
-        return 0
+        return None
 
     try:
-        print("Fetching Instagram follower count via API...")
-        # Instagram Graph API endpoint for user profile
-        url = f"https://graph.instagram.com/me?fields=followers_count&access_token={INSTAGRAM_ACCESS_TOKEN}"
+        print("Fetching Instagram profile data via API...")
+        url = f"https://graph.instagram.com/me?fields=id,username,media_count,account_type&access_token={INSTAGRAM_ACCESS_TOKEN}"
         
         response = requests.get(url, timeout=10)
         response.raise_for_status()
         
-        data = response.json()
-        if "followers_count" in data:
-            follower_count = data["followers_count"]
-            print(f"Instagram followers: {follower_count}")
-            return follower_count
+        basic_data = response.json()
+        if "username" not in basic_data:
+            print(f"Error: Instagram API missing username field: {basic_data}")
+            return None
+            
+        # Now get additional fields like follower count
+        url = f"https://graph.instagram.com/me?fields=followers_count,follows_count&access_token={INSTAGRAM_ACCESS_TOKEN}"
+        
+        followers_response = requests.get(url, timeout=10)
+        followers_data = {}
+        
+        if followers_response.status_code == 200:
+            followers_data = followers_response.json()
         else:
-            print("Error: Instagram API response missing follower count")
-            print(f"Response: {data}")
-            return 0
+            print(f"Warning: Couldn't fetch Instagram follower data: {followers_response.text}")
+            
+        # Get user profile info if available
+        profile_data = {
+            "username": basic_data.get("username", ""),
+            "media_count": basic_data.get("media_count", 0),
+            "account_type": basic_data.get("account_type", ""),
+            "followers": followers_data.get("followers_count", 0),
+            "following": followers_data.get("follows_count", 0)
+        }
+            
+        print(f"Instagram data fetched: @{profile_data['username']} - {profile_data['followers']} followers")
+        return profile_data
     except Exception as e:
         print(f"Error fetching Instagram data: {e}")
-        return 0
+        return None
+
+
+def download_image(image_url, filename):
+    """Download an image from the given URL and save it to the img directory"""
+    if not image_url:
+        return None
+        
+    try:
+        # Create img directory if it doesn't exist
+        img_dir = "img"
+        if not os.path.exists(img_dir):
+            os.makedirs(img_dir)
+            
+        # Create full path for the image
+        image_path = os.path.join(img_dir, filename)
+        
+        # Download the image
+        response = requests.get(image_url, stream=True, timeout=10)
+        response.raise_for_status()
+        
+        # Save the image
+        with open(image_path, 'wb') as img_file:
+            for chunk in response.iter_content(chunk_size=8192):
+                img_file.write(chunk)
+                
+        print(f"Downloaded image: {image_path}")
+        return image_path
+    except Exception as e:
+        print(f"Error downloading image {image_url}: {e}")
+        return None
 
 
 def load_existing_data():
@@ -106,30 +174,30 @@ def save_data(data):
 def main():
     """Main function to fetch and save social media data"""
     # Get current data
-    twitter_followers = get_twitter_followers()
-    instagram_followers = get_instagram_followers()
+    twitter_profile = get_twitter_profile()
+    instagram_profile = get_instagram_profile()
     
-    # Load existing data to preserve history if needed
+    # Load existing data for fallback
     existing_data = load_existing_data()
     
-    # Use existing data as fallback if API failed
-    if twitter_followers == 0:
-        twitter_followers = existing_data.get("twitter", {}).get("followers", 0)
-        print(f"Using existing Twitter follower count: {twitter_followers}")
-    
-    if instagram_followers == 0:
-        instagram_followers = existing_data.get("instagram", {}).get("followers", 0)
-        print(f"Using existing Instagram follower count: {instagram_followers}")
-    
-    # Update with new data
+    # Build new data object
     data = {
-        "instagram": {
-            "followers": instagram_followers
-        },
-        "twitter": {
-            "followers": twitter_followers
-        }
+        "last_updated": datetime.now().isoformat()
     }
+    
+    # Add Twitter data
+    if twitter_profile:
+        data["twitter"] = twitter_profile
+    else:
+        data["twitter"] = existing_data.get("twitter", {"followers": 0})
+        print("Using existing Twitter data")
+    
+    # Add Instagram data
+    if instagram_profile:
+        data["instagram"] = instagram_profile
+    else:
+        data["instagram"] = existing_data.get("instagram", {"followers": 0})
+        print("Using existing Instagram data")
     
     # Save to file
     save_data(data)
