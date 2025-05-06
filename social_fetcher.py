@@ -78,7 +78,8 @@ def get_instagram_profile():
 
     try:
         print("Fetching Instagram profile data via API...")
-        url = f"https://graph.instagram.com/me?fields=id,username,media_count,account_type&access_token={INSTAGRAM_ACCESS_TOKEN}"
+        # Get basic profile information including full name
+        url = f"https://graph.instagram.com/me?fields=id,username,full_name,media_count,account_type&access_token={INSTAGRAM_ACCESS_TOKEN}"
         
         response = requests.get(url, timeout=10)
         response.raise_for_status()
@@ -89,7 +90,7 @@ def get_instagram_profile():
             return None
             
         # Now get additional fields like follower count
-        url = f"https://graph.instagram.com/me?fields=followers_count,follows_count&access_token={INSTAGRAM_ACCESS_TOKEN}"
+        url = f"https://graph.instagram.com/me?fields=followers_count,follows_count,biography&access_token={INSTAGRAM_ACCESS_TOKEN}"
         
         followers_response = requests.get(url, timeout=10)
         followers_data = {}
@@ -101,14 +102,33 @@ def get_instagram_profile():
             
         # Get user profile info if available
         profile_data = {
+            "id": basic_data.get("id", ""),
             "username": basic_data.get("username", ""),
+            "name": basic_data.get("full_name", ""),
             "media_count": basic_data.get("media_count", 0),
             "account_type": basic_data.get("account_type", ""),
+            "biography": followers_data.get("biography", ""),
             "followers": followers_data.get("followers_count", 0),
             "following": followers_data.get("follows_count", 0)
         }
+        
+        # Try to fetch profile picture if possible
+        try:
+            profile_pic_url = f"https://graph.instagram.com/me?fields=profile_picture_url&access_token={INSTAGRAM_ACCESS_TOKEN}"
+            pic_response = requests.get(profile_pic_url, timeout=10)
+            if pic_response.status_code == 200:
+                pic_data = pic_response.json()
+                if "profile_picture_url" in pic_data:
+                    profile_data["profile_image_url"] = pic_data["profile_picture_url"]
+                    if SAVE_PROFILE_IMAGES:
+                        profile_data["profile_image_path"] = download_image(
+                            profile_data["profile_image_url"],
+                            "insta_profile.jpg"
+                        )
+        except Exception as pic_error:
+            print(f"Warning: Couldn't fetch Instagram profile picture: {pic_error}")
             
-        print(f"Instagram data fetched: @{profile_data['username']} - {profile_data['followers']} followers")
+        print(f"Instagram data fetched: @{profile_data['username']} ({profile_data['name']}) - {profile_data['followers']} followers")
         return profile_data
     except Exception as e:
         print(f"Error fetching Instagram data: {e}")
