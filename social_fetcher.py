@@ -41,7 +41,7 @@ def get_twitter_profile():
         
         data = response.json()
         if data and "data" in data:
-            user_data = data["data"]
+            user_data = data["data"][0]
             profile_data = {
                 "username": user_data.get("username", ""),
                 "name": user_data.get("name", ""),
