@@ -28,7 +28,7 @@ def get_twitter_profile():
         print("Error: Twitter API credentials not provided")
         return None
 
-    url = f"https://api.x.com/2/users?id={TWITTER_USER_ID}&user.fields=name,username,description,profile_image_url,public_metrics"
+    url = f"https://api.x.com/2/users?ids={TWITTER_USER_ID}&user.fields=name,username,description,profile_image_url,public_metrics"
     headers = {
         "Authorization": f"Bearer {TWITTER_BEARER_TOKEN}",
         "Content-Type": "application/json"
