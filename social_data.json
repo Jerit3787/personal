@@ -1,7 +1,14 @@
 {
-  "last_updated": "2025-05-08T02:01:44.677707",
+  "last_updated": "2025-05-08T04:17:11.473951",
   "twitter": {
-    "followers": 0
+    "username": "jerit3787",
+    "name": "Danish Hakim",
+    "description": "I love math and coding\u2764\ufe0f | Wanted to explore more \u2728 | Studying for now \ud83d\udcda | Work Email : danish.hakim@danplace.tech",
+    "followers": 56,
+    "following": 50,
+    "tweets": 389,
+    "profile_image_url": "https://pbs.twimg.com/profile_images/1264840801948807168/U_1mYAB7_normal.jpg",
+    "profile_image_path": "img/twitter_profile.jpg"
   },
   "instagram": {
     "id": "9701787479913044",
@@ -12,7 +19,7 @@
     "biography": "achieving what others can\u2019t do\ninsyaAllah your future software engineer\nsagacious 34\u2019 / luminuex 39\u2019",
     "followers": 539,
     "following": 619,
-    "profile_image_url": "https://scontent-sin2-2.cdninstagram.com/v/t51.2885-19/274086862_1113777356121305_1193622962455057962_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=103&ccb=7-5&_nc_sid=bf7eb4&_nc_ohc=03OSSWr9fOkQ7kNvwEJ6HmE&_nc_oc=Adn-Sn1mQxxGUXfJ8TZLI_5Uvdn9l_v28OzJ-4GySa4B35Ci0p-Z2qbeT8RIY5t0Y_s&_nc_zt=24&_nc_ht=scontent-sin2-2.cdninstagram.com&edm=AP4hL3IEAAAA&oh=00_AfK2AMtk3HnLPGZaIjU4g6uK9pDYBFqWFcSqc3-DnWenpw&oe=6821DDD4",
+    "profile_image_url": "https://scontent-lhr8-2.cdninstagram.com/v/t51.2885-19/274086862_1113777356121305_1193622962455057962_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=103&ccb=7-5&_nc_sid=bf7eb4&_nc_ohc=03OSSWr9fOkQ7kNvwEPm7A7&_nc_oc=AdleWUhq8mIpuGAsA1nCqR06bjiB07HBERDyJvehdkvFCqVFShiuvcoXa8k8ggwlPPI&_nc_zt=24&_nc_ht=scontent-lhr8-2.cdninstagram.com&edm=AP4hL3IEAAAA&oh=00_AfJdCmc5GAwH10B_UHaqLXpyMLfG4pHn1-L0LexLXd3UTw&oe=68221614",
     "profile_image_path": "img/insta_profile.jpg"
   }
 }
