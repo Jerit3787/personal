@@ -41,7 +41,7 @@ def get_twitter_profile():
         
         data = response.json()
         if data and "data" in data:
-            user_data = data["data"][0]
+            user_data = data["data"]
             profile_data = {
                 "username": user_data.get("username", ""),
                 "name": user_data.get("name", ""),
@@ -83,6 +83,55 @@ def get_twitter_profile_alternative():
 
     try:
         print("Fetching Twitter profile data via alternative API...")
+        response = requests.get(url, headers=headers, timeout=10)
+        response.raise_for_status()
+        
+        data = response.json()
+        if data and "data" in data:
+            user_data = data["data"][0]
+            profile_data = {
+                "username": user_data.get("username", ""),
+                "name": user_data.get("name", ""),
+                "description": user_data.get("description", ""),
+                "followers": user_data.get("public_metrics", {}).get("followers_count", 0),
+                "following": user_data.get("public_metrics", {}).get("following_count", 0),
+                "tweets": user_data.get("public_metrics", {}).get("tweet_count", 0),
+                "profile_image_url": user_data.get("profile_image_url", "")
+            }
+            
+            # Save profile image if available and configured to do so
+            if SAVE_PROFILE_IMAGES and profile_data["profile_image_url"]:
+                profile_data["profile_image_path"] = download_image(
+                    profile_data["profile_image_url"], 
+                    "twitter_profile.jpg"
+                )
+            
+            print(f"Twitter data fetched: @{profile_data['username']} - {profile_data['followers']} followers")
+            return profile_data
+        else:
+            print("Error: Unexpected Twitter API response format")
+            print(f"Response: {data}")
+            return None
+    except Exception as e:
+        print(f"Error fetching Twitter data: {e}")
+        return None
+
+def get_twitter_profile_username():
+    """Fetch comprehensive Twitter profile data via username API"""
+    if not TWITTER_BEARER_TOKEN or not TWITTER_USER_ID:
+        print("Error: Twitter API credentials not provided")
+        return None
+
+    url = f"https://api.x.com/2/users?ids={TWITTER_USERNAME}&user.fields=name,username,description,profile_image_url,public_metrics"
+    headers = {
+        "Authorization": f"Bearer {TWITTER_BEARER_TOKEN}",
+        "Content-Type": "application/json"
+    }
+
+    try:
+        print("Fetching Twitter profile data via username API...")
+        print("NOTE - This API depends on the username not being changed by the user.")
+        print("If the username has changed, please update the username or attempt to use the user ID API instead.")
         response = requests.get(url, headers=headers, timeout=10)
         response.raise_for_status()
         
