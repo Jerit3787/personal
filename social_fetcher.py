@@ -94,6 +94,7 @@ def get_twitter_profile():
         return None
         
     url = f"https://api.x.com/2/users/{TWITTER_USER_ID}?user.fields=name,username,description,profile_image_url,public_metrics"
+    # The primary API returns a single user directly in the "data" field
     return fetch_twitter_profile(url, "primary API")
 
 
@@ -119,7 +120,7 @@ def get_twitter_profile_username():
     print("If the username has changed, please update the username or attempt to use the user ID API instead.")
     
     # This API returns an array of users in the "data" field
-    return fetch_twitter_profile(url, "username API", lambda d: d["data"][0])
+    return fetch_twitter_profile(url, "username API")
 
 
 def get_instagram_profile():
