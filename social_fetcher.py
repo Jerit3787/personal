@@ -292,6 +292,11 @@ def main():
     twitter_profile = get_twitter_profile()
     if not twitter_profile:
         twitter_profile = get_twitter_profile_alternative()
+        if not twitter_profile:
+            twitter_profile = get_twitter_profile_username()
+            if not twitter_profile:
+                print("Error: Unable to fetch Twitter profile data")
+                return
 
     instagram_profile = get_instagram_profile()
     
