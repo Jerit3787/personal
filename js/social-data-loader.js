@@ -83,6 +83,18 @@ function updateInstagramPanel(data) {
             imgElement.src = instagram.profile_image_path;
         }
     }
+
+    // Make the profile panel clickable with dynamically generated Instagram URL
+    if (instagram.username) {
+        const profileUrl = `https://www.instagram.com/${instagram.username}/`;
+        const profilePanel = document.querySelector('.profilePanel:nth-child(2)');
+        if (profilePanel) {
+            profilePanel.style.cursor = 'pointer';
+            profilePanel.onclick = () => {
+                window.open(profileUrl, '_blank');
+            };
+        }
+    }
 }
 
 // Function to update the Twitter panel with profile data
@@ -133,6 +145,18 @@ function updateTwitterPanel(data) {
         const imgElement = document.querySelector('.profilePanel:nth-child(3) .profileImg');
         if (imgElement) {
             imgElement.src = twitter.profile_image_path;
+        }
+    }
+    
+    // Make the profile panel clickable with dynamically generated Twitter URL
+    if (twitter.username) {
+        const profileUrl = `https://twitter.com/${twitter.username}`;
+        const profilePanel = document.querySelector('.profilePanel:nth-child(3)');
+        if (profilePanel) {
+            profilePanel.style.cursor = 'pointer';
+            profilePanel.onclick = () => {
+                window.open(profileUrl, '_blank');
+            };
         }
     }
 }
