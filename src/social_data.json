@@ -7,7 +7,7 @@
     "following": 87,
     "tweets": 570,
     "profile_image_url": "https://pbs.twimg.com/profile_images/1662121803098226688/evN-AwHX_400x400.jpg",
-    "profile_image_path": "img/twitter_profile.jpg"
+    "profile_image_path": "src/img/twitter_profile.jpg"
   },
   "instagram": {
     "id": "9701787479913044",
@@ -19,6 +19,6 @@
     "followers": 546,
     "following": 624,
     "profile_image_url": "https://scontent-sea1-1.cdninstagram.com/v/t51.2885-19/274086862_1113777356121305_1193622962455057962_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=103&ccb=1-7&_nc_sid=bf7eb4&_nc_ohc=KPfyhndzhBYQ7kNvwEsjZZH&_nc_oc=AdmmwQ8R5Z0DQ0bbmwQvvEbwe_gnNQ1jQLbvljJ9nQkVWI67P1fjl4TQhpP9uirlh1E&_nc_zt=24&_nc_ht=scontent-sea1-1.cdninstagram.com&edm=AP4hL3IEAAAA&oh=00_AfMvOo0KEKCTdA-m_aERcL7AHp5l3z95yyoHLgj2Vedt3g&oe=684CEED4",
-    "profile_image_path": "img/insta_profile.jpg"
+    "profile_image_path": "src/img/insta_profile.jpg"
   }
 }
