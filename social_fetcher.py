@@ -244,6 +244,24 @@ def save_data(data):
         print(f"Error saving data: {e}")
 
 
+def verify_image_accessibility(image_path, fallback_url):
+    """Check if the image file exists and is accessible. If not, return the fallback URL."""
+    if image_path and os.path.exists(image_path):
+        return image_path
+    return fallback_url
+
+
+def is_remote_image_accessible(url):
+    """Check if a remote image URL is accessible (returns 200 and is an image)."""
+    try:
+        resp = requests.head(url, timeout=5, allow_redirects=True)
+        if resp.status_code == 200 and 'image' in resp.headers.get('Content-Type', ''):
+            return True
+    except Exception:
+        pass
+    return False
+
+
 def main():
     """Main function to fetch and save social media data"""
     # Get current data
@@ -260,26 +278,50 @@ def main():
     
     # Load existing data for fallback
     existing_data = load_existing_data()
-    
-    # Build new data object
-    data = {
-        "last_updated": datetime.now().isoformat()
-    }
-    
+
+    # Fallback image URLs (can be local or remote)
+    twitter_fallback_img = "img/twitter.png"
+    instagram_fallback_img = "img/instagram.png"
+
+    # Check and update existing image links if not accessible
+    for platform, fallback_img in [("twitter", twitter_fallback_img), ("instagram", instagram_fallback_img)]:
+        profile = existing_data.get(platform, {})
+        img_url = profile.get("profile_image_url")
+        if img_url and not is_remote_image_accessible(img_url):
+            print(f"{platform.title()} profile_image_url not accessible, updating to fallback.")
+            profile["profile_image_url"] = fallback_img
+            existing_data[platform] = profile
+
     # Add Twitter data
     if twitter_profile:
-        data["twitter"] = twitter_profile
+        if 'profile_image_path' in twitter_profile:
+            twitter_profile['profile_image_path'] = verify_image_accessibility(
+                twitter_profile['profile_image_path'], twitter_fallback_img
+            )
+            if twitter_profile['profile_image_path'] == twitter_fallback_img:
+                twitter_profile['profile_image_url'] = twitter_fallback_img
+        elif 'profile_image_url' in twitter_profile:
+            twitter_profile['profile_image_url'] = twitter_fallback_img
+        data = {"twitter": twitter_profile}
     else:
-        data["twitter"] = existing_data.get("twitter", {"followers": 0})
+        data = {"twitter": existing_data.get("twitter", {"followers": 0})}
         print("Using existing Twitter data")
-    
+
     # Add Instagram data
     if instagram_profile:
+        if 'profile_image_path' in instagram_profile:
+            instagram_profile['profile_image_path'] = verify_image_accessibility(
+                instagram_profile['profile_image_path'], instagram_fallback_img
+            )
+            if instagram_profile['profile_image_path'] == instagram_fallback_img:
+                instagram_profile['profile_image_url'] = instagram_fallback_img
+        elif 'profile_image_url' in instagram_profile:
+            instagram_profile['profile_image_url'] = instagram_fallback_img
         data["instagram"] = instagram_profile
     else:
         data["instagram"] = existing_data.get("instagram", {"followers": 0})
         print("Using existing Instagram data")
-    
+
     # Save to file
     save_data(data)
     print("Social media data update complete!")
