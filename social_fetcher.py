@@ -14,7 +14,7 @@ from urllib.parse import urlparse
 from pathlib import Path
 
 # Configuration
-OUTPUT_PATH = "social_data.json"
+OUTPUT_PATH = "src/social_data.json"
 TWITTER_USER_ID = os.environ.get("TWITTER_USER_ID", "")
 TWITTER_BEARER_TOKEN = os.environ.get("TWITTER_BEARER_TOKEN", "")
 TWITTER_USERNAME = os.environ.get("TWITTER_USERNAME", "")  # Added missing variable
