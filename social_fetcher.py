@@ -189,28 +189,23 @@ def get_instagram_profile():
 
 
 def download_image(image_url, filename):
-    """Download an image from the given URL and save it to the img directory"""
+    """Download an image from the given URL and save it to the src/img directory"""
     if not image_url:
         return None
-        
     try:
-        # Create img directory if it doesn't exist
-        img_dir = "img"
+        # Create src/img directory if it doesn't exist
+        img_dir = os.path.join("src", "img")
         if not os.path.exists(img_dir):
             os.makedirs(img_dir)
-            
         # Create full path for the image
         image_path = os.path.join(img_dir, filename)
-        
         # Download the image
         response = requests.get(image_url, stream=True, timeout=10)
         response.raise_for_status()
-        
         # Save the image
         with open(image_path, 'wb') as img_file:
             for chunk in response.iter_content(chunk_size=8192):
                 img_file.write(chunk)
-                
         print(f"Downloaded image: {image_path}")
         return image_path
     except Exception as e:
