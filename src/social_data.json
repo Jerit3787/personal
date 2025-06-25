@@ -7,7 +7,7 @@
     "following": 87,
     "tweets": 570,
     "profile_image_url": "https://pbs.twimg.com/profile_images/1662121803098226688/evN-AwHX_400x400.jpg",
-    "profile_image_path": "src/img/twitter_profile.jpg"
+    "profile_image_path": "img/twitter_profile.jpg"
   },
   "instagram": {
     "id": "9701787479913044",
@@ -18,7 +18,7 @@
     "biography": "achieving what others can\u2019t do\ninsyaAllah your future software engineer\nsagacious 34\u2019 / luminuex 39\u2019",
     "followers": 544,
     "following": 623,
-    "profile_image_url": "https://scontent-ams4-1.cdninstagram.com/v/t51.2885-19/274086862_1113777356121305_1193622962455057962_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=103&ccb=1-7&_nc_sid=bf7eb4&_nc_ohc=ZEsdv_L3wFAQ7kNvwE0O5ui&_nc_oc=Adm6Zx_VlVb-nuhnLvZJ-igvjkkfRzUU7yxNTeNLmgtsFx1mxwS8EMdd7kCmQ7kjKoc&_nc_zt=24&_nc_ht=scontent-ams4-1.cdninstagram.com&edm=AP4hL3IEAAAA&oh=00_AfNNB7gochi_fO1SwWOY3tIwOe-u6vl6pSjgPmq6_DaYTA&oe=685BDFD4",
-    "profile_image_path": "src/img/insta_profile.jpg"
+    "profile_image_url": "https://scontent-sjc3-1.cdninstagram.com/v/t51.2885-19/274086862_1113777356121305_1193622962455057962_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=103&ccb=1-7&_nc_sid=bf7eb4&_nc_ohc=essFDCW2T9sQ7kNvwE4-2nA&_nc_oc=AdmJFPvZn020CP8wHzF0Nl_zUlDZW7kU2_aBmoSCGIUd71CNaOnJDqqWrMNQCcH2ivw&_nc_zt=24&_nc_ht=scontent-sjc3-1.cdninstagram.com&edm=AP4hL3IEAAAA&oh=00_AfPaPxQsz_mQI4xvHme5CRkWUBvgynuxV7WooHDP6hcfoA&oe=686206D4",
+    "profile_image_path": "img/insta_profile.jpg"
   }
 }
