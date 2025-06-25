@@ -195,10 +195,12 @@ def download_image(image_url, filename):
     try:
         # Create src/img directory if it doesn't exist
         img_dir = os.path.join("src", "img")
+        relative_img_dir = os.path.join("img")
         if not os.path.exists(img_dir):
             os.makedirs(img_dir)
         # Create full path for the image
         image_path = os.path.join(img_dir, filename)
+        relative_image_path = os.path.join(relative_img_dir, filename)
         # Download the image
         response = requests.get(image_url, stream=True, timeout=10)
         response.raise_for_status()
@@ -207,7 +209,7 @@ def download_image(image_url, filename):
             for chunk in response.iter_content(chunk_size=8192):
                 img_file.write(chunk)
         print(f"Downloaded image: {image_path}")
-        return image_path
+        return relative_image_path
     except Exception as e:
         print(f"Error downloading image {image_url}: {e}")
         return None
