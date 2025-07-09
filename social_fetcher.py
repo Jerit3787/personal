@@ -132,7 +132,7 @@ def get_instagram_profile():
     try:
         print("Fetching Instagram profile data via API...")
         # Get basic profile information including full name
-        url = f"https://graph.instagram.com/me?fields=id,username,name,media_count,account_type&access_token={INSTAGRAM_ACCESS_TOKEN}"
+        url = f"https://graph.instagram.com/me?fields=username,name,media_count&access_token={INSTAGRAM_ACCESS_TOKEN}"
         
         response = requests.get(url, timeout=10)
         response.raise_for_status()
@@ -155,11 +155,9 @@ def get_instagram_profile():
             
         # Get user profile info if available
         profile_data = {
-            "id": basic_data.get("id", ""),
             "username": basic_data.get("username", ""),
             "name": basic_data.get("name", ""),
             "media_count": basic_data.get("media_count", 0),
-            "account_type": basic_data.get("account_type", ""),
             "biography": followers_data.get("biography", ""),
             "followers": followers_data.get("followers_count", 0),
             "following": followers_data.get("follows_count", 0)
